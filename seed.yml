@@ -1,0 +1,351 @@
+tp:
+  respawn <CHILD>:
+  respawn <ADULT>:
+  bolero:
+flags:
+  SUNS_SONG: false
+  SONG_OF_TIME: false
+dead ends:
+- marineresearchlab
+- swampspiderhouse
+- touristinformation
+- house
+- osspiderhouse
+- potionshop
+- zorashop
+- grotto-empty-nosk
+- metal-grotto
+- next-grotto
+- mayorsresidence
+- zoradrummer
+- tomb
+- magichags
+- lakesidelab
+- laundrypool
+- poisongrotto
+- stockpotinn
+- fishingpond
+- bombchushop
+- secretshrine
+- powderkegshop
+- milkbar
+- dekutheater
+- mountainsmithy
+- fairyfountain
+- royalfamilystomb
+- honeydarling
+- shadowtemple
+- stonetowertemple
+- spirittemple
+- firetemple
+- icecavern
+- snowheadtemple
+- woodfalltemple
+- dodongo
+- botw
+- dekutree
+- watertemple
+- grotto
+- grotto-empty
+- grotto-done
+- cowgrotto
+- unk
+areas:
+- zd:
+    dive:
+    exit:
+    glitch:
+- bkz:
+    exit:
+- sfm:
+    bottom exit:
+    bottom grotto:
+    hookshot:
+    top grotto:
+- r2i:
+    fenced exit:
+    signposted exit:
+    hookshot:
+- ic:
+    empty well:
+    hole by ikana castle:
+    northeast house:
+    south exit:
+    spirit house:
+    stone temple:
+- igy:
+    down exit:
+    grotto:
+    night 1 grave:
+    night 2 grave:
+    night 3 grave:
+- wom:
+    fail:
+    lrrul:
+- hw: {}
+- gbc:
+    arch:
+    exit:
+    fishermans hut:
+    house next to fishermans hut:
+    grotto:
+    grotto behind building:
+    lab:
+    marine research lab:
+    pirates fortress:
+    underwater wood north:
+    grotto on ledge:
+- hf:
+    lon lon ranch:
+    gerudo valley:
+    grotto in rock:
+    hyrule market:
+    grotto near kakariko:
+    kak:
+    kokiri:
+    lake hylia:
+    south grotto:
+    west grotto:
+    zoras river:
+    northwest grotto:
+- lh:
+    fishing pond:
+    gravestone:
+    hyrule field:
+    owl:
+    water temple <ADULT>:
+- hm:
+    alley <CHILD>:
+    house by temple <CHILD>:
+    hyrule field:
+    shooting gallery <CHILD, DAY>:
+    temple:
+- ba:
+    hyrule market:
+    north door:
+    south door 1:
+    south door 2:
+- kf:
+    deku tree:
+    exit:
+    know-it-all:
+    kokiri shop:
+    links house:
+    lost woods:
+    midos house:
+    sarias house:
+- lw:
+    forest escape:
+    goron city:
+    ll:
+    rll:
+    rl grotto:
+    rlrlr:
+    rlrlul grotto:
+    rlrlulr:
+    rr:
+    u:
+- gt:
+    rear gate:
+    front gate:
+- gv:
+    exit:
+    hyrule field:
+    tent:
+    rock grotto on ledge:
+- llr:
+    left door:
+- pfx:
+    exit:
+    northeast opening:
+    northeast door:
+    savewarp:
+    underwater tunnel:
+- wf:
+    hole in wall:
+- igc:
+    blue door:
+    mouth:
+- aic:
+    north pit:
+    dungeon entrance:
+    dungeon exit:
+- rr:
+    chicken house:
+    house next to chicken house:
+    exit:
+    hut:
+- potionshop:
+    corner:
+    exit:
+- sh1:
+    up:
+    grotto:
+    down:
+- sh2:
+    down:
+    up:
+- shm:
+    bottom mtn exit:
+    exit:
+    top:
+- ao:
+    underground:
+    door:
+- tot:
+    exit:
+- mr:
+    exit by romani exit:
+    other exit:
+    romani exit:
+- zf:
+    jabu jabu:
+- dp:
+    exit:
+    oktorok:
+- zr:
+    upper rock circle grotto:
+    upper plain grotto:
+    kokiri shortcut:
+- kv:
+    death mountain trail:
+    shooting gallery <ADULT, DAY>:
+    medicine shop back <DAY>:
+    medicine shop front <DAY>:
+    bazaar <DAY>:
+    fenced building <DAY>:
+    secret grotto:
+    windmill:
+    first house:
+    graveyard:
+    house of skulltula:
+    house on far right:
+    above chickens:
+    botw <CHILD>:
+    exit:
+    grotto:
+- dmt:
+    dodongos cavern:
+    fairy fountain:
+    fire temple:
+    goron city:
+- pfw:
+    fail:
+- tf:
+    east clock town (stone):
+    east exit (stone):
+    grotto by milk road:
+    grotto by north clock town (ice):
+    grotto by north exit (ice):
+    grotto by west exit (water):
+    grotto on pillar by observatory:
+    north clock town (ice):
+    north exit (ice):
+    rock grotto by fountains:
+    south clock town (wood):
+    south exit (wood):
+    west clock town (water):
+    west exit (water):
+- nct:
+    south clock town:
+    west clock town:
+    termina:
+    east clock town:
+    grotto:
+- sct:
+    happy mask:
+    east clock town lower:
+    east clock town upper:
+    laundry pool:
+    termina:
+    west clock town lower:
+    west clock town upper:
+    north clock town:
+- ect:
+    kids:
+    termina:
+    honey and darling:
+    mayors residence:
+    milk bar:
+    north clock town:
+    rooftop:
+    shooting gallery:
+    south clock town lower:
+    south clock town middle:
+    stock pot inn:
+    treasure chest shop:
+- wct:
+    curiosity shop:
+    termina:
+    bomb shop:
+    lottery shop:
+    mighty training center:
+    north clock town:
+    post office:
+    trading post:
+    south clock town:
+- ss:
+    exit across waterfall:
+    exit by tourist info:
+    grotto by spider house:
+    potion shop:
+    tourist information:
+    woods of mystery:
+- gy: {}
+- zh:
+    clam room:
+    door with weird guy:
+    front door:
+    house behind clam:
+    octopus room:
+- swamppath:
+    house:
+    non tingle exit:
+    tingle exit:
+- dmc:
+    fire temple:
+    goron city:
+    lower grotto:
+    upper grotto:
+- gvil:
+    shrine?:
+- wr:
+    cave entrance:
+    exit:
+- gbc2:
+    exit:
+    grotto:
+    hookshot climb:
+    zora hall:
+- gc:
+    exit:
+    firey area:
+    forest exit:
+    bottom exit:
+- btgy:
+    warp without door:
+    warp with door:
+- sw:
+    exit:
+- mv:
+    mountain smithy:
+    snowhead:
+    top:
+    owl:
+- pf:
+    lowest door:
+    northwest low door:
+- hc:
+    big rock child:
+    big rock adult:
+- dc:
+    desert:
+    hole in the wall:
+    temple:
+- gf:
+    desert:
+    exit:
+- cb:
+    hyrule market:
+    hyrule field:
+    door:
