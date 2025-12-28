@@ -3,8 +3,8 @@ tp:
   respawn <ADULT>:
   bolero:
 flags:
-  SUNS_SONG: false
   SONG_OF_TIME: false
+  SUNS_SONG: false
 dead ends:
 - marineresearchlab
 - swampspiderhouse
@@ -48,6 +48,7 @@ dead ends:
 - grotto
 - grotto-empty
 - grotto-done
+- grotto-done-done
 - cowgrotto
 - unk
 areas:
@@ -82,7 +83,8 @@ areas:
 - wom:
     fail:
     lrrul:
-- hw: {}
+- hw:
+    exit:
 - gbc:
     arch:
     exit:

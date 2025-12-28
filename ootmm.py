@@ -9,7 +9,8 @@ dead_ends = data['dead ends']
 areas = data['areas']
 
 tp = data['tp']
-flags = [key for key in data['flags'] if data['flags'][key]]
+all_flags = data['flags']
+flags = [key for key in all_flags if all_flags[key]]
 
 toggles = [("CHILD", "ADULT", "SONG_OF_TIME"), ("DAY", "NIGHT", "SUNS_SONG")]
 
@@ -237,15 +238,8 @@ else:
 	path_table.find_routes(start, end)
 
 blank_data = {
-	"tp": {
-		"respawn <CHILD>": None,
-		"respawn <ADULT>": None,
-		"bolero": None
-	},
-	"flags": {
-		"SUNS_SONG": False,
-		"SONG_OF_TIME": False
-	},
+	"tp": { key: None for key in tp },
+	"flags": { key: False for key in all_flags },
 	"dead ends": dead_ends,
 	"areas": [{area[0]: {path[0]: None for path in area[1] if path[0] not in tp}} for area in path_table.areas[:path_table.k]]
 }
