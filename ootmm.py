@@ -264,6 +264,7 @@ else:
 blank_data = {
 	"tp": {key: None for key in tp},
 	"flags": {key: False for key in all_flags},
+	"toggles": data["toggles"],
 	"dead ends": dead_ends,
 	"areas": [
 		{path_table.original_names[area[0]]: {path[0]: None if path[1] is None or '-' not in path[1] else path[1] for path in area[1] if path[0] not in tp}}
