@@ -12,9 +12,8 @@ areas = data["areas"]
 tp = data["tp"]
 all_flags = data["flags"]
 flags = [key for key in all_flags if all_flags[key]]
-
-toggles = [("CHILD", "ADULT", "SONG_OF_TIME"), ("DAY", "NIGHT", "SUNS_SONG")]
-
+toggles = data["toggles"]
+toggles = [(*toggles[key], key) for key in toggles]
 
 class Route:
 	def __init__(self, code, route):
