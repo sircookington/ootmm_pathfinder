@@ -1,4 +1,6 @@
-FNAME = "seed.yml"
+#!/bin/python3
+
+FNAME = "watertemple.yml"
 
 import yaml
 import sys
@@ -21,7 +23,7 @@ class Route:
 		self.route = route
 
 	def print(self):
-		if self.code == 0:
+		if self.code == 0 and self.route is None:
 			print("stay put")
 			return
 		if self.code == -1:
@@ -267,7 +269,7 @@ blank_data = {
 	"toggles": data["toggles"],
 	"dead ends": dead_ends,
 	"areas": [
-		{path_table.original_names[area[0]]: {path[0]: None if path[1] is None or '-' not in path[1] else path[1] for path in area[1] if path[0] not in tp}}
+		{path_table.original_names[area[0]]: {path[0]: None if path[1] is None or not path[1].split('-')[0] == path[0].split('-')[0] else path[1] for path in area[1] if path[0] not in tp}}
 		for area in path_table.areas[: path_table.k]
 	],
 }
