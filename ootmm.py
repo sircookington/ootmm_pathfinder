@@ -1,6 +1,6 @@
 #!/bin/python3
 
-FNAME = "watertemple.yml"
+FNAME = "seed.yml"
 
 import yaml
 import sys
@@ -131,7 +131,7 @@ class PathTable:
 				cond_end = exit_name.find(">")
 
 				if base or cond_start != -1:
-					conditions = exit_name[cond_start + 1 : cond_end].split()
+					conditions = exit_name[cond_start + 1 : cond_end].replace(',', ' ').split()
 					meets_conditions = True
 					for condition in conditions:
 						if condition not in flags:
