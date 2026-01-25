@@ -46,6 +46,7 @@ class PathTable:
 		self.areas = areas
 		self.original_names = {name.split()[0]: name for area in areas for name in area}
 		self.areas = [(key.split()[0], list(area[key].items())) for area in areas for key in area]
+		self.areas += [('_', [])]
 		self.areas += [(dead_end, []) for dead_end in dead_ends]
 
 		self.n = len(self.areas)
@@ -270,7 +271,7 @@ blank_data = {
 	"dead ends": dead_ends,
 	"areas": [
 		{path_table.original_names[area[0]]: {path[0]: None if path[1] is None or not path[1].split('-')[0] == path[0].split('-')[0] else path[1] for path in area[1] if path[0] not in tp}}
-		for area in path_table.areas[: path_table.k]
+		for area in path_table.areas[: path_table.k-1]
 	],
 }
 
