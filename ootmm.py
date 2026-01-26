@@ -264,14 +264,24 @@ if end == "dump":
 else:
 	path_table.find_routes(start, end)
 
+ROUTE = 0
+DEST = 1
+CODE = 0
+PATHS = 1
+full_name = lambda area_code : path_table.original_names[area_code]
+loc = lambda area_code : area_code and area_code.split('-')[0]
 blank_data = {
 	"tp": {key: None for key in tp},
 	"flags": {key: False for key in all_flags},
 	"toggles": data["toggles"],
 	"dead ends": dead_ends,
 	"areas": [
-		{path_table.original_names[area[0]]: {path[0]: None if path[1] is None or not path[1].split('-')[0] == path[0].split('-')[0] else path[1] for path in area[1] if path[0] not in tp}}
-		for area in path_table.areas[: path_table.k-1]
+		{
+			full_name(area[CODE]): {
+				path[ROUTE]: path[DEST] if loc(path[DEST]) == loc(area[CODE]) else None
+					for path in area[PATHS] if path[ROUTE] not in tp
+			}
+		} for area in path_table.areas[: path_table.k-1]
 	],
 }
 
