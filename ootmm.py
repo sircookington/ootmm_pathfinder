@@ -17,6 +17,8 @@ flags = [key for key in all_flags if all_flags[key]]
 toggles = data["toggles"]
 toggles = [(*toggles[key], key) for key in toggles]
 
+WARP_AREA = "_"
+
 class Route:
 	def __init__(self, code, route):
 		self.code = code
@@ -46,7 +48,7 @@ class PathTable:
 		self.areas = areas
 		self.original_names = {name.split()[0]: name for area in areas for name in area}
 		self.areas = [(key.split()[0], list(area[key].items())) for area in areas for key in area]
-		self.areas += [('_', [])]
+		self.areas += [(WARP_AREA, [(warp, tp[warp]) for warp in tp])]
 		self.areas += [(dead_end, []) for dead_end in dead_ends]
 
 		self.n = len(self.areas)
@@ -58,12 +60,6 @@ class PathTable:
 			n = len(exits)
 			if n > self.max_exits:
 				self.max_exits = n
-
-		for warp in tp:
-			if tp[warp] is None:
-				continue
-			for i in range(self.k):
-				self.areas[i][1].append((warp, tp[warp]))
 
 		self.rl = {}
 		for i in range(self.n):
@@ -204,8 +200,9 @@ class PathTable:
 		for i in range(n):
 			flags = self.flag_combos[i]
 			dist = self.dist(i, start, end)
+			dist_warp = self.dist(i, WARP_AREA, end)
 
-			route = self.find_route(i, start, end)
+			route = self.find_route(i, WARP_AREA if dist_warp and dist_warp <= dist else start, end)
 			codes[i] = route.code
 			if route.code not in routes:
 				routes[route.code] = route
@@ -239,25 +236,15 @@ class PathTable:
 
 path_table = PathTable(areas, dead_ends, tp, toggles, flags)
 
-if len(sys.argv) == 3:
-	start = sys.argv[1]
-	end = sys.argv[2]
-	if start not in path_table.rl:
-		print('unknown area "%s"' % start)
-		exit()
-	if end not in path_table.rl and end not in ["dump"]:
-		print('unknown area "%s"' % end)
-		exit()
-else:
-	start = input("from: ")
-	if start not in path_table.rl:
-		print('unknown area "%s"' % start)
-		exit()
-
-	end = input("to:   ")
-	if end not in path_table.rl and end not in ["dump"]:
-		print('unknown area "%s"' % end)
-		exit()
+argc = len(sys.argv)
+start = sys.argv[1] if argc == 3 else WARP_AREA if argc == 2 else input("from: ")
+if start not in path_table.rl:
+	print('unknown area "%s"' % start)
+	exit()
+end = sys.argv[2] if argc == 3 else sys.argv[1] if argc == 2 else input("to:   ")
+if end not in path_table.rl and end not in ["dump"]:
+	print('unknown area "%s"' % end)
+	exit()
 
 if end == "dump":
 	path_table.dump(start)
@@ -279,7 +266,7 @@ blank_data = {
 		{
 			full_name(area[CODE]): {
 				path[ROUTE]: path[DEST] if loc(path[DEST]) == loc(area[CODE]) else None
-					for path in area[PATHS] if path[ROUTE] not in tp
+					for path in area[PATHS]
 			}
 		} for area in path_table.areas[: path_table.k-1]
 	],
