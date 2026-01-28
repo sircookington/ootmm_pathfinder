@@ -128,11 +128,15 @@ class PathTable:
 				cond_end = exit_name.find(">")
 
 				if base or cond_start != -1:
-					conditions = exit_name[cond_start + 1 : cond_end].replace(',', ' ').split()
-					meets_conditions = True
-					for condition in conditions:
-						if condition not in flags:
-							meets_conditions = False
+					conditions = exit_name[cond_start + 1 : cond_end].replace(',', ' ')
+					condition_sets = [c.split() for c in conditions.split('|')]
+					for condition_set in condition_sets:
+						meets_conditions = True
+						for condition in condition_set:
+							if condition not in flags:
+								meets_conditions = False
+								break
+						if meets_conditions:
 							break
 					if not meets_conditions:
 						continue
