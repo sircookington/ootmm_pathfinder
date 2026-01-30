@@ -148,25 +148,22 @@ class PathTable:
 
 		def loop():
 			done = True
-			for start in range(self.k):
-				for end in range(self.n):
-					dist_start_end = table[start][end].dist
-					if dist_start_end is None:
+			for area in range(self.k):
+				for via in range(self.k):
+					if (dist := table[area][via].dist) is None or dist != 1:
 						continue
-					for area in range(self.k):
-						if table[area][start].dist is None:
+					for end in range(self.n):
+						if (dist := table[via][end].dist) is None:
 							continue
-						dist_area_start = table[area][start].dist
-						if dist_area_start != 1:
-							continue
-						dist_area_end = table[area][end].dist
-						dist_via_start = dist_area_start + dist_start_end
-						if dist_area_end is None or dist_via_start < dist_area_end:
-							table[area][end] = self.TableEntry(start, dist_via_start, table[area][start].exit_number)
+						dist += 1
+						if (cur_dist := table[area][end].dist) is None or dist < cur_dist:
+							table[area][end] = self.TableEntry(via, dist, table[area][via].exit_number)
 							done = False
 			return done
 
+		i = 0
 		while not loop():
+			i += 1
 			continue
 
 		return table
@@ -206,7 +203,7 @@ class PathTable:
 			dist = self.dist(i, start, end)
 			dist_warp = self.dist(i, WARP_AREA, end)
 
-			route = self.find_route(i, WARP_AREA if dist_warp and dist_warp <= dist else start, end)
+			route = self.find_route(i, WARP_AREA if dist_warp and (dist is None or dist_warp <= dist) else start, end)
 			codes[i] = route.code
 			if route.code not in routes:
 				routes[route.code] = route
