@@ -66,6 +66,7 @@ class PathTable:
 			self.rl[self.areas[i][0]] = i
 
 		self.toggles = toggles
+		self.hunt_table = {}
 
 		flag_combos = [[]]
 
@@ -99,6 +100,14 @@ class PathTable:
 		for e in exits:
 			print(e[0], "--->", e[1])
 
+	def hunt(self, tags):
+		for area in self.hunt_table:
+			for exit_name in self.hunt_table[area]:
+				for tag in tags:
+					if tag not in self.hunt_table[area][exit_name]:
+						break
+					print(area, '=>', exit_name)
+
 	def generate_paths(self, flags, base):
 		def empty_table(k, n):
 			table = [[None] * n for _ in range(k)]
@@ -122,6 +131,15 @@ class PathTable:
 				exit_name = e[0]
 				exit_loc = e[1]
 				if exit_loc is None:
+					continue
+				if exit_loc.startswith('.'):
+					if not base:
+						continue
+					tags = exit_loc[1:].split()
+					if name not in self.hunt_table:
+						self.hunt_table[name] = { exit_name: tags }
+					else:
+						self.hunt_table[name][exit_name] = tags
 					continue
 
 				cond_start = exit_name.find("<")
@@ -161,9 +179,7 @@ class PathTable:
 							done = False
 			return done
 
-		i = 0
 		while not loop():
-			i += 1
 			continue
 
 		return table
@@ -238,19 +254,23 @@ class PathTable:
 path_table = PathTable(areas, dead_ends, tp, toggles, flags)
 
 argc = len(sys.argv)
-start = sys.argv[1] if argc == 3 else WARP_AREA if argc == 2 else input("from: ")
-if start not in path_table.rl:
-	print('unknown area "%s"' % start)
-	exit()
-end = sys.argv[2] if argc == 3 else sys.argv[1] if argc == 2 else input("to:   ")
-if end not in path_table.rl and end not in ["dump"]:
-	print('unknown area "%s"' % end)
-	exit()
-
-if end == "dump":
-	path_table.dump(start)
+if argc > 1 and sys.argv[1] == "hunt":
+	tags = sys.argv[2:]
+	path_table.hunt(tags)
 else:
-	path_table.find_routes(start, end)
+	start = sys.argv[1] if argc == 3 else WARP_AREA if argc == 2 else input("from: ")
+	if start not in path_table.rl and start not in path_table.hunt_table:
+		print('unknown area "%s"' % start)
+		exit()
+	end = sys.argv[2] if argc == 3 else sys.argv[1] if argc == 2 else input("to:   ")
+	if end not in path_table.rl and end not in ["dump", "hunt"] and not end.startswith('.'):
+		print('unknown area "%s"' % end)
+		exit()
+
+	if end == "dump":
+		path_table.dump(start)
+	else:
+		path_table.find_routes(start, end)
 
 ROUTE = 0
 DEST = 1
