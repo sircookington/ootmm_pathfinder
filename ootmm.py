@@ -51,6 +51,8 @@ class PathTable:
 		self.areas += [(WARP_AREA, [(warp, tp[warp]) for warp in tp])]
 		self.areas += [(dead_end, []) for dead_end in dead_ends]
 
+		self.dead_ends = {}
+
 		self.n = len(self.areas)
 		self.k = self.n - len(dead_ends)
 
@@ -163,6 +165,8 @@ class PathTable:
 						continue
 
 				table[i][self.rl[exit_loc]] = self.TableEntry(e[0], 1, j)
+				if self.rl[exit_loc] >= self.k:
+					self.dead_ends[exit_loc] = name
 
 		for i in range(self.k):
 			table[i][i].dist = 0
@@ -212,6 +216,9 @@ class PathTable:
 		return Route(route.code * self.max_exits + exit_number, [start, table[s][path].path] + route.route)
 
 	def find_routes(self, start, end):
+		if self.rl[start] >= self.k:
+			start = self.dead_ends[start] if start in self.dead_ends else WARP_AREA
+
 		n = len(self.tables)
 
 		codes = [None] * n
