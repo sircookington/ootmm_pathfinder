@@ -102,11 +102,14 @@ class PathTable:
 
 	def hunt(self, tags):
 		for area in self.hunt_table:
-			for exit_name in self.hunt_table[area]:
+			for exit_name in (exits := self.hunt_table[area]):
+				print_loc = True
 				for tag in tags:
-					if tag not in self.hunt_table[area][exit_name]:
+					if tag not in exits[exit_name]:
+						print_loc = False
 						break
-					print(area, '=>', exit_name)
+				if print_loc:
+					print(area, '=>', exit_name, '|', ' '.join(exits[exit_name]).upper())
 
 	def generate_paths(self, flags, base):
 		def empty_table(k, n):
