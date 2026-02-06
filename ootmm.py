@@ -165,7 +165,7 @@ class PathTable:
 						continue
 
 				table[i][self.rl[exit_loc]] = self.TableEntry(e[0], 1, j)
-				if self.rl[exit_loc] >= self.k:
+				if self.rl[exit_loc] >= self.k and not name == WARP_AREA:
 					self.dead_ends[exit_loc] = name
 
 		for i in range(self.k):
@@ -262,11 +262,14 @@ class PathTable:
 
 
 path_table = PathTable(areas, dead_ends, tp, toggles, flags)
+gen = False
 
 argc = len(sys.argv)
 if argc > 1 and sys.argv[1] == "hunt":
 	tags = sys.argv[2:]
 	path_table.hunt(tags)
+elif argc > 1 and sys.argv[1] == "new":
+	gen = True
 else:
 	start = sys.argv[1] if argc == 3 else WARP_AREA if argc == 2 else input("from: ")
 	if start not in path_table.rl and start not in path_table.hunt_table:
@@ -282,37 +285,38 @@ else:
 	else:
 		path_table.find_routes(start, end)
 
-ROUTE = 0
-DEST = 1
-CODE = 0
-PATHS = 1
-full_name = lambda area_code : path_table.original_names[area_code]
-loc = lambda area_code : area_code and area_code.split('-')[0]
-blank_data = {
-	"tp": {key: None for key in tp},
-	"flags": {key: False for key in all_flags},
-	"toggles": data["toggles"],
-	"dead ends": dead_ends,
-	"areas": [
-		{
-			full_name(area[CODE]): {
-				path[ROUTE]: path[DEST] if loc(path[DEST]) == loc(area[CODE]) else None
-					for path in area[PATHS]
-			}
-		} for area in path_table.areas[: path_table.k-1]
-	],
-}
+if gen:
+	ROUTE = 0
+	DEST = 1
+	CODE = 0
+	PATHS = 1
+	full_name = lambda area_code : path_table.original_names[area_code]
+	loc = lambda area_code : area_code and area_code.split('-')[0]
+	blank_data = {
+		"tp": {key: None for key in tp},
+		"flags": {key: False for key in all_flags},
+		"toggles": data["toggles"],
+		"dead ends": dead_ends,
+		"areas": [
+			{
+				full_name(area[CODE]): {
+					path[ROUTE]: path[DEST] if loc(path[DEST]) == loc(area[CODE]) else None
+						for path in area[PATHS]
+				}
+			} for area in path_table.areas[: path_table.k-1]
+		],
+	}
 
 
 ## little kludge to represent None as empty string in yaml output
-def represent_none(self, _):
-	return self.represent_scalar("tag:yaml.org,2002:null", "")
+	def represent_none(self, _):
+		return self.represent_scalar("tag:yaml.org,2002:null", "")
 
 
-yaml.add_representer(type(None), represent_none)
-yaml.representer.SafeRepresenter.add_representer(type(None), represent_none)
-yaml.SafeDumper.add_representer(type(None), lambda self, data: self.represent_scalar("tag:yaml.org,2002:null", ""))
+	yaml.add_representer(type(None), represent_none)
+	yaml.representer.SafeRepresenter.add_representer(type(None), represent_none)
+	yaml.SafeDumper.add_representer(type(None), lambda self, data: self.represent_scalar("tag:yaml.org,2002:null", ""))
 ###
-with open("newseed.yml", "w") as f:
-	yaml.dump(blank_data, f, sort_keys=False)
+	with open("newseed.yml", "w") as f:
+		yaml.dump(blank_data, f, sort_keys=False)
 
